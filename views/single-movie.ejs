@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>	Movie App </title>
+<% include head %>
+</head>
+<body>
+	<% include navbar %>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8 col-sm-offset-2 text-center">
+				<h1 class="single-movie-title">
+					<strong><%= movieData.title %></strong>
+				</h1>
+
+				<h3 class="single-movie-title">
+					<strong><%= movieData.tagline %></strong>
+				</h3>
+
+
+				<a href="<%= movieData.homepage %>"><img class="single-movie-img hvr-glow" src="<%= imageBaseUrl + movieData.poster_path %>" /></a>
+
+				<p class="overview-header">Movie Synopsis: <span class="single-movie-overview">
+					<%= movieData.overview %>
+				</span></p>
+			</div>
+		</div>
+	</div>
+
+<!-- Button trigger modal -->
+<div class="col-sm-12 text-center">
+	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+		More Details
+	</button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Movie Information</h4>
+      </div>
+      <div class="modal-body">
+				<a href="https://www.imdb.com/title/<%= movieData.imdb_id %>" target="_blank">IMDB Link</a>
+				<p><%= movieData.budget %></p>
+				<p><%= movieData.revenue %></p>
+				<p><%= movieData.release_date %></p>
+				<ul>
+					<% movieData.production_companies.forEach( function(company) { %>
+							<li><%= company.name %></li>
+					<% }) %>
+				</ul>
+      </div>
+      <div class="modal-footer">
+				<button type="button" class="btn btn-primary btn-favorite" data-dismiss="modal">Add to Favorites</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
