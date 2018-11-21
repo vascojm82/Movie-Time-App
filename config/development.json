@@ -1,0 +1,22 @@
+{
+  "host": "http://localhost:3000",
+  "sessionSecret": "secret",
+  "fb": {
+    "clientID": "<INSERT-HERE>",
+    "clientSecret": "<INSERT-HERE>",
+    "callbackURL": "<INSERT-HERE>/auth/facebook/callback",
+    "profileFields": ["id", "displayName", "photos"]
+  },
+  "twitter": {
+    "consumerKey": "<INSERT-HERE>",
+    "consumerSecret": "<INSERT-HERE>",
+    "callbackURL": "<INSERT-HERE>/auth/twitter/callback",
+    "profileFields": ["id", "displayName", "photos"]
+  },
+  "github": {
+    "clientID": "<INSERT-HERE>",
+    "clientSecret": "<INSERT-HERE>",
+    "callbackURL": "<INSERT-HERE>/auth/facebook/callback",
+    "profileFields": ["id", "displayName", "photos"]
+  }
+}
