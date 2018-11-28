@@ -16,7 +16,7 @@
   "github": {
     "clientID": "<INSERT-HERE>",
     "clientSecret": "<INSERT-HERE>",
-    "callbackURL": "<INSERT-HERE>/auth/facebook/callback",
+    "callbackURL": "<INSERT-HERE>/auth/github/callback",
     "profileFields": ["id", "displayName", "photos"]
   }
 }
