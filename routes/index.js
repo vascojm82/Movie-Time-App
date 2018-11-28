@@ -11,8 +11,6 @@ const passport = require('passport');
 /*Additional processor function*/
 //Fetch all Favorite Movies from IMDB API
 let fetchFavoriteIMDB = (data) => {
-  console.log("Favorite Moviez: " + data);
-
   return new Promise((resolve, reject) => {
     const movieUrl = `${apiBaseUrl}/movie/`;
     let favoriteMovies = {results: new Array()};
@@ -22,22 +20,14 @@ let fetchFavoriteIMDB = (data) => {
 
       requestApi(movieUrl, favoriteMovieId)
         .then((movie) => {
-          console.log("fetchFavoriteIMDB -- movie: " + movie);
           favoriteMovies.results.push(movie);
-          console.log("fetchFavoriteIMDB -- These are your favoriteMovies: " + JSON.stringify(favoriteMovies));
-          console.log("fetchFavoriteIMDB --favoriteMovies.length: " + favoriteMovies.results.length);
-
           if(favoriteMovies.results.length >= data.length){
-            console.log("fetchFavoriteIMDB -- data.length: " + data.length);
-            console.log("fetchFavoriteIMDB -- favoriteMovies.length: " + favoriteMovies.results.length);
-            console.log("fetchFavoriteIMDB -- SUCCESS FETCHING FAVORITE MOVIES: " + JSON.stringify(favoriteMovies));
             resolve(favoriteMovies);
           }
         })
         .catch((error) => {
           console.log("ERROR LOADING FAVORITE MOVIE RECORD TO ARRAY");
-          reject();
-          return;
+          return reject();
         });
     });
   });
@@ -53,7 +43,6 @@ let requestApi = (movieUrl, favoriteMovieId) => {
         return;
       }
 
-      console.log("REQUEST SUCCESSFULL: " + data);
       resolve(data);
     });
   });

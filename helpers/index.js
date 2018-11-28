@@ -91,35 +91,17 @@ let addFavorites = (uniqueId, movieId, sessionId) => {
 }
 
 let getFavorites = (uniqueId) => {
-  return new Promise((resolve, reject) => {
-    console.log(`getFavorites - uniqueId: ${uniqueId}`);
-    processFavoriteMovies(uniqueId)
-      .then((data) => {
-        console.log("Data: " + JSON.stringify(data));
-        resolve(data.newMovieArray);
-      }).catch((error) => {
-        console.log("ERROR: Could Not Get Favorite Movies Data");
-        reject();
-      });
-  });
-}
+  return new Promise( async(resolve, reject) => {
+    let newMovieArray = new Array();
+    let movieArray = new Array();
+    let found = false;
 
-let processFavoriteMovies = (uniqueId) => {
-  console.log(`processFavoriteMovies - uniqueId: ${uniqueId}`);
-  console.log(`firebase.usersArray: ${JSON.stringify(firebase.usersArray)}`);
-  return new Promise((resolve, reject) => {
-    firebase.usersArray.forEach(function(user, index){
-      console.log(`user(Inside ForEach): ${JSON.stringify(user)}`);
-      console.log(`usersArray(Inside ForEach): ${JSON.stringify(firebase.usersArray)}`);
-      if(user.uniqueId === uniqueId){
-        console.log("Favorites(Inner): UNIQUE ID MATCH!");     //FIREBASE IS RETARDED !!!!
-        console.log(`processFavoriteMovies - user.uniqueId: ${user.uniqueId}`);
+    await firebase.usersArray.forEach(function(user, index){
+      if(user.uniqueId === uniqueId){                          //FIREBASE IS RETARDED !!!
         console.log(`processFavoriteMovies - user.favorites: ${JSON.stringify(user.favorites)}`);  //Array of key: movieId object pairs. ie: 'SomeIdUsedAsKey': {movieId: 33432}
 
-        let movieArray = Object.values(user.favorites);   //Array of just movieId Objects. ie: {movieId: 33432}
-        console.log(`movieArray: ${JSON.stringify(movieArray)}`);
-
-        let newMovieArray = new Array();
+        newMovieArray = [];
+        movieArray = Object.values(user.favorites);   //Array of just movieId Objects. ie: {movieId: 33432}
 
         movieArray.forEach(function(movie, index){
           console.log(`MovieID: ${movie.movieId}`);
@@ -127,15 +109,16 @@ let processFavoriteMovies = (uniqueId) => {
         });
         console.log(`newMovieArray: ${newMovieArray}`);
 
-        const data = {
-          newMovieArray: newMovieArray
-        }
-
-        resolve(data);
+        found = true;
       }
     });
-    reject();
-  });
+    if(found){
+      resolve(newMovieArray);
+    }else{
+      console.log("ERROR: Could Not Get Favorite Movies Data");
+      reject();
+    }
+ });
 }
 
 //middleware to check if the user is authenticated & logged in
