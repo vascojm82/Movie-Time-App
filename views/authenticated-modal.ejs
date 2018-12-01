@@ -23,7 +23,24 @@
     </div>
   </div>
 </div>
-
 <script>
+  function lockUserModal(route){
+      $.ajax({
+          url: route,
+          method: "POST",
+          data: ''
+          })
+          .then(function(data) {
+              console.log(data);
+              if (data) {
+              console.log("Logged In");
+              console.log("data: " + data);
+              } else {
+              alert("Error Logging in");
+              }
+        });
+  }
+  
   $("#myModal").modal('show');
+  lockUserModal("/lockUserModal");
 </script>

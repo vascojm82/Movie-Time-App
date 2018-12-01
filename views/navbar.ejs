@@ -11,9 +11,9 @@
       <a class="navbar-brand" href="/">Movie Time</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav login-favs">
         <li class="hvr-grow"><% if( typeof user != "undefined" && user != ''){ %> <a href="/logout">Logout</a> <% } else{ %> <a href="/login">Login</a> <% } %></li>
-        <li class="hvr-grow"><a href="/favorites">Favorites</a></li>
+        <li class="hvr-grow favorites-link"><a href="/favorites">Favorites</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>

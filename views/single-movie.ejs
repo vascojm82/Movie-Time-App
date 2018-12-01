@@ -6,60 +6,45 @@
 </head>
 <body>
 	<% include navbar %>
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-8 col-sm-offset-2 text-center">
+	<div class="container" style="position: relative">
+		<div class="row main-row synopsis-row">
+			<div class="col-md-4">
+				<p class="text-center"><a href="<%= movieData.homepage %>"><img class="single-movie-img hvr-glow" src="<%= imageBaseUrl + movieData.poster_path %>" /></a></p>
+			</div>
+			<div class="col-md-8" style="padding-right: 0;">
 				<h1 class="single-movie-title">
-					<strong><%= movieData.title %></strong>
+					<strong>
+						<%= movieData.title %></strong>
 				</h1>
+				<h2 class="overview-header">Synopsis: <br/><br/><span class="single-movie-overview"><%= movieData.overview %></span></h2>
 
-				<h3 class="single-movie-title">
-					<strong><%= movieData.tagline %></strong>
-				</h3>
+				<button type="button" class="btn btn-primary btn-favorite" data-toggle="modal" data-target="#myModal"><i class="fa fa-heart" aria-hidden="true"></i><span> Add to Favorites</span></button>
+				<a href="<%= movieData.homepage %>">
+					<button type="button" class="btn btn-primary btn-homepage"><span>Visit Site</span></button>
+				</a>
+			</div>
 
-
-				<a href="<%= movieData.homepage %>"><img class="single-movie-img hvr-glow" src="<%= imageBaseUrl + movieData.poster_path %>" /></a>
-
-				<p class="overview-header">Movie Synopsis: <span class="single-movie-overview">
-					<%= movieData.overview %>
-				</span></p>
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label=""><span aria-hidden="true">&times;</span></button>
+						</div>
+						<div class="modal-body">
+							<div class="row">
+								<div class="col-12 text-center">
+									<h3 class="favorite"><i class="fa fa-heart" style="font-size:24px;color:red"></i> Added to Favorites</h3>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-
-<!-- Button trigger modal -->
-<div class="col-sm-12 text-center">
-	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-		More Details
-	</button>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Movie Information</h4>
-      </div>
-      <div class="modal-body">
-				<a href="https://www.imdb.com/title/<%= movieData.imdb_id %>" target="_blank">IMDB Link</a>
-				<p><%= movieData.budget %></p>
-				<p><%= movieData.revenue %></p>
-				<p><%= movieData.release_date %></p>
-				<ul>
-					<% movieData.production_companies.forEach( function(company) { %>
-							<li><%= company.name %></li>
-					<% }) %>
-				</ul>
-      </div>
-      <div class="modal-footer">
-				<button type="button" class="btn btn-primary btn-favorite" data-dismiss="modal">Add to Favorites</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
 </body>
 </html>

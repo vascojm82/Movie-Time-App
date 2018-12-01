@@ -7,6 +7,8 @@ const nowPlayingUrl = `${apiBaseUrl}/movie/now_playing?api_key=${apiKey}`;
 const imageBaseUrl = 'http://image.tmdb.org/t/p/w300';
 const helper = require('../helpers');
 const passport = require('passport');
+let route = express();
+route.locals.flag = 0;
 
 /*Additional processor function*/
 //Fetch all Favorite Movies from IMDB API
@@ -51,12 +53,15 @@ let requestApi = (movieUrl, favoriteMovieId) => {
 
 router.use((req, res, next) => {
   res.locals.imageBaseUrl = imageBaseUrl;
+  res.locals.flag = route.locals.flag;
+  console.log('middleware --- res.locals.flag: ' + res.locals.flag);
   next();   //DON'T FORGET 'next()' OR THE REQUEST CYCLE ENDS AND IT DOESN"T CONTINUE TO THE NEXT ROUTE
 });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
   console.log("Session1: " + req.session.id);
+  console.log("locals: " + JSON.stringify(res.locals));
   const sessionId =  req.session.id;
 
   if(typeof sessionId === 'undefined'){
@@ -158,8 +163,21 @@ router.post('/favorites/:movieId', function(req, res, next) {
   });
 });
 
+router.post('/lockUserModal', function(req, res, next){
+  if(route.locals.flag < 1)
+    route.locals.flag = route.locals.flag + 1;
+  res.json({success: "User Modal Locked"});
+});
+
 router.get('/login', function(req, res, next){
   res.render('login');
+});
+
+router.get('/logout', (req, res, next) => {
+  if(route.locals.flag > 0)
+    route.locals.flag = route.locals.flag - 1;
+  req.logout();
+  res.redirect('/');
 });
 
 router.get('/auth/facebook', passport.authenticate('facebook'));
@@ -172,13 +190,8 @@ router.get('/auth/twitter/callback', passport.authenticate('twitter', { successR
 
 router.get('/auth/github', passport.authenticate('github'));
 
-router.get('/auth/github/callback', passport.authenticate('github', { successRedirect: '/', failureRedirect: '/login' }), function(req, res, next){console.log("GitHub Auth Callback ran !");});
+router.get('/auth/github/callback', passport.authenticate('github', { successRedirect: '/', failureRedirect: '/login' }), (req, res, next) => {console.log("Twitter Auth Callback ran !");});
 
-
-router.get('/logout', (req, res, next) => {
-  req.logout();
-  res.redirect('/');
-});
 
 // 404 for all other requests
 router.get('*', function (req, res, next){

@@ -33,7 +33,7 @@ ref.on('child_changed', function(childSnapshot, prevChildKey) {    //Retrieve al
   }
 
   usersArray.push(userRecord);
-  console.log("child_changed - usersArray: " + JSON.stringify(usersArray));
+  //console.log("child_changed - usersArray: " + JSON.stringify(usersArray));
 });
 
 ref.on('child_added', function(childSnapshot, prevChildKey) {
@@ -51,7 +51,7 @@ ref.on('child_added', function(childSnapshot, prevChildKey) {
   }
 
   usersArray.push(userRecord);
-  console.log("child_added - usersArray: " + JSON.stringify(usersArray));
+  //console.log("child_added - usersArray: " + JSON.stringify(usersArray));
 });
 
 module.exports = {

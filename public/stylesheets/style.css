@@ -121,3 +121,28 @@ a {
     width: 100%;
   }
 /******************/
+.synopsis-row{
+  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+  min-height: 90vh; /* These two lines are counted as one :-)       */
+  display: flex;
+  align-items: center;
+}
+
+.modal-header{
+  border-bottom: 1px solid #fff
+}
+.modal-footer{
+  border-top: 1px solid #fff
+}
+
+/**** MEDIA QUERIES ***/
+@media screen and (max-width: 992px) {
+  
+}
+
+@media screen and (max-width: 767px) {
+  .form-group select{
+    width: 230px;
+  }
+}
+/*************************/
